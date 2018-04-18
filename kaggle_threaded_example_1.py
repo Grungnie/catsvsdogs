@@ -2,7 +2,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from helper_functions import HiddenPrints
 
 model_name = 'monster'
-model_directory = 'conv-64-64-128-128-2'
+model_directory = 'conv-64-64-128-128-no-dropout'
 
 img_width, img_height = 150, 150 # dimensions of our images.
 train_data_dir = 'data/train'
@@ -11,10 +11,10 @@ nb_train_samples = 20000
 nb_validation_samples = 5000
 epochs = 100
 batch_size = 16
-validation_batch_size = 100
-threads=4
+validation_batch_size = 16
+threads=3
 
-train_batches = nb_validation_samples // batch_size
+train_batches = nb_train_samples // batch_size
 validation_batches = nb_validation_samples // validation_batch_size
 
 def get_datasets(x, output_queues):
@@ -100,7 +100,7 @@ if __name__ == '__main__':
         model.add(Flatten())
         model.add(Dense(128))
         model.add(Activation('relu'))
-        model.add(Dropout(0.5))
+#        model.add(Dropout(0.8))
         model.add(Dense(1))
         model.add(Activation('sigmoid'))
 
